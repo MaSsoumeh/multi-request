@@ -1,6 +1,6 @@
 # Requester
 
-Create a requester which get multiple requests and show the results in order.
+Create a requester which gets multiple requests and show the results in order.
 
 ## Details
 
