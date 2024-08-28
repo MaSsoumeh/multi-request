@@ -1,15 +1,17 @@
-// TODO
 document.getElementById('send-requests').addEventListener('click', sendRequest);
+
 const resultsDiv = document.getElementById('results');
+
 function sendRequest() {
   resultsDiv.innerHTML = '';
 
-  let requests = document.getElementById('urls').value;
-  requests = requests.trim();
-  const splitReq = requests.split(/\n+|\s+/);
-  splitReq.map((request) => {
+  let urls = document.getElementById('urls').value.trim();
+  const urlArray =urls.split(/\n+|\s+/);
+  
+  urlArray.forEach((request) => {
     const resDiv = document.createElement('div');
     const hr = document.createElement('hr');
+    
     myFetch(request)
       .then((jsonResponse) => {
         resDiv.innerHTML = JSON.stringify(jsonResponse);
@@ -19,12 +21,12 @@ function sendRequest() {
     resultsDiv.appendChild(resDiv);
     resultsDiv.appendChild(hr);
   });
+}
 
-  async function myFetch(request) {
-    let response = await fetch(request);
-    if (!response.ok) {
-      throw new Error('error');
-    }
-    return await response.json();
+async function myFetch(url) {
+  let response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} ${response.statusText}`);
   }
+  return await response.json();
 }
